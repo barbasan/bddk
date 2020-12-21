@@ -28,7 +28,7 @@ However, Linux and Mac do not give permission to ChromeDriver for using Chrome. 
 
 # How to Use
 
-###Getting the Data
+### Getting the Data
 
 Returns dataframe
 
@@ -68,7 +68,7 @@ rapor = bddk.get_rapor(
 )
 print(rapor.head())
 ```
-###Getting Kalem and Taraf
+### Getting Kalem and Taraf
 
 Both functions print available strings and do not return any object. 
 ```
