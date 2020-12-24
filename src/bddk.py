@@ -14,7 +14,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.wait import WebDriverWait
-
+try:
+    import xlrd
+except ModuleNotFoundError:
+    pass
 
 def get_download_path():
     if os.name == 'nt':
@@ -197,25 +200,27 @@ def get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, z
     items[text.index(str(para))].click()
 
     # Kalem
-    for kal in kalem:
+    for i, kal in enumerate(kalem):
         driver.find_element_by_id("ddlTabloKalem_chosen").click()
         html_list = driver.find_element_by_id("ddlTabloKalem_chosen")
         items = html_list.find_elements_by_tag_name("li")
-        text = []
-        for item in items:
-            text.append(item.text)
-        items[text.index(str(kal))].click()
-
-    # taraf
-    if taraf is not None:
-        for tar in taraf:
-            driver.find_element_by_id("ddlTaraf_chosen").click()
-            html_list = driver.find_element_by_id("ddlTaraf_chosen")
-            items = html_list.find_elements_by_tag_name("li")
+        if kal == kalem[0]:
             text = []
             for item in items:
                 text.append(item.text)
-            items[text.index(str(tar))].click()
+        items[text.index(str(kal))+i].click()
+
+    # taraf
+    if taraf is not None:
+        for j, tar in enumerate(taraf):
+            driver.find_element_by_id("ddlTaraf_chosen").click()
+            html_list = driver.find_element_by_id("ddlTaraf_chosen")
+            items = html_list.find_elements_by_tag_name("li")
+            if tar == taraf[0]:
+                text = []
+                for item in items:
+                    text.append(item.text)
+            items[text.index(str(tar))+j].click()
 
     # rapor
     driver.find_element_by_id("btnRaporOlustur").click()
@@ -226,9 +231,16 @@ def get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, z
 
     # csv
     time.sleep(zaman / 6)
-    if pd.__version__ == "1.1.5":
+    warnings.filterwarnings("ignore", category=UserWarning)
+    enginexlrd = 0
+    try:
+        if xlrd.__version__ < "2.0":
+            enginexlrd = 1
+    except NameError:
+        pass
+    if enginexlrd == 0:
         sonuc = pd.read_excel(os.path.join(get_download_path(), 'Rapor.xlsx'), engine="openpyxl")
-    else:
+    elif enginexlrd == 1:
         sonuc = pd.read_excel(os.path.join(get_download_path(), 'Rapor.xlsx'))
     print("Veri alindi.")
     driver.quit()

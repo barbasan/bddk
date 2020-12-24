@@ -1,11 +1,11 @@
 from setuptools import setup
 
-with open("README.md","r") as fh:
-    long_description = fh.read()
+with open("/home/barbasan/Documents/bddkalpha/README.md","r") as mdfile:
+    descr = mdfile.read()
 
 setup(
     name="bddk",
-    version="0.1",
+    version="0.2",
     description="Bddk Veri",
     py_modules=["bddk"],
     package_dir={"": "src"},
@@ -13,10 +13,15 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-	"License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)"
+	"License :: OSI Approved :: MIT License",
+	"Development Status :: 3 - Alpha",
+	"Operating System :: Microsoft :: Windows",
+	"Operating System :: MacOS",
+	"Operating System :: POSIX :: Linux",
+	"Intended Audience :: Financial and Insurance Industry"
     ],
-    long_description=long_description,
     long_description_content_type="text/markdown",
+    long_description=descr,
     install_requires=[
         "pandas",
         "openpyxl",
@@ -24,7 +29,7 @@ setup(
         "urllib3",
         "requests"
     ],
-    url="https://github.com/barbasan",
+    url="https://github.com/barbasan/bddk",
     author="Ilyas Burak Hizarci",
     author_email="i.burakhizarci@gmail.com"
 )
