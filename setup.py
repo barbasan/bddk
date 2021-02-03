@@ -5,7 +5,7 @@ with open("/home/barbasan/Documents/bddkalpha/README.md","r") as mdfile:
 
 setup(
     name="bddk",
-    version="0.2",
+    version="1.0",
     description="Bddk Veri",
     py_modules=["bddk"],
     package_dir={"": "src"},
@@ -14,7 +14,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
 	"License :: OSI Approved :: MIT License",
-	"Development Status :: 3 - Alpha",
+	"Development Status :: 4 - Beta",
 	"Operating System :: Microsoft :: Windows",
 	"Operating System :: MacOS",
 	"Operating System :: POSIX :: Linux",

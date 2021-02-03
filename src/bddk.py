@@ -3,6 +3,7 @@ import platform
 import tarfile
 import time
 import urllib.request
+import warnings
 
 import io
 import pandas as pd
@@ -137,13 +138,17 @@ def get_taraf(browser="firefox"):
     driver.quit()
 
 
-def get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, zaman=48, browser="firefox"):
+def get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, zaman=120, browser="firefox"):
     if browser == "firefox":
         driver = firefox()
     if browser == "chrome":
         driver = chrome()
     print("Yukleniyor...")
     driver.get("https://www.bddk.org.tr/BultenAylik/tr/Home/Gelismis")
+
+    # Rapor temizleme
+    if os.path.isfile(os.path.join(get_download_path(), 'Rapor.xlsx')):
+        os.remove(os.path.join(get_download_path(), 'Rapor.xlsx'))
 
     # Baslangic yil
     driver.find_element_by_id("ddlBaslangicYil_chosen").click()
@@ -230,7 +235,6 @@ def get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, z
     driver.find_element_by_id("btnExcel").click()
 
     # csv
-    time.sleep(zaman / 6)
     warnings.filterwarnings("ignore", category=UserWarning)
     enginexlrd = 0
     try:
@@ -238,12 +242,22 @@ def get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, z
             enginexlrd = 1
     except NameError:
         pass
+    ilk_zaman = 0
     if enginexlrd == 0:
-        sonuc = pd.read_excel(os.path.join(get_download_path(), 'Rapor.xlsx'), engine="openpyxl")
+        while ilk_zaman < zaman:
+            time.sleep(1)
+            if os.path.isfile(os.path.join(get_download_path(), 'Rapor.xlsx')):
+                sonuc = pd.read_excel(os.path.join(get_download_path(), 'Rapor.xlsx'), engine="openpyxl")
+                break
+            ilk_zaman += ilk_zaman
     elif enginexlrd == 1:
-        sonuc = pd.read_excel(os.path.join(get_download_path(), 'Rapor.xlsx'))
+        while ilk_zaman < zaman:
+            time.sleep(1)
+            if os.path.isfile(os.path.join(get_download_path(), 'Rapor.xlsx')):
+                sonuc = pd.read_excel(os.path.join(get_download_path(), 'Rapor.xlsx'))
+                break
+            ilk_zaman += ilk_zaman
     print("Veri alindi.")
     driver.quit()
-    time.sleep(zaman / 48)
     os.remove(os.path.join(get_download_path(), 'Rapor.xlsx'))
     return sonuc

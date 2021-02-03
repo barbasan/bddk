@@ -19,7 +19,7 @@ In case of a problem;
 
 [ChromeDriver](https://chromedriver.chromium.org/) for Chrome
 
-[geckodriver](https://chromedriver.chromium.org/) for Firefox
+[geckodriver](https://github.com/mozilla/geckodriver/releases) for Firefox
 
 ## Important Note
 
@@ -32,7 +32,7 @@ However, Linux and Mac do not give permission to ChromeDriver for using Chrome. 
 
 Returns dataframe
 
-````
+```
 bddk.get_rapor(kalem, basyil, basay, bityil, bitay, per, para="TL", taraf=None, zaman=48, browser="firefox")
 
 Paremeters:
@@ -48,11 +48,11 @@ Paremeters:
         Para Birimi
     taraf: list, use get_taraf for suitable elements
         Taraflar, "Sektör" her zaman seçilidir, bunun dışında istediklerinizi liste olarak ekleyin.
-    zaman : int, 48 (default)
+    zaman : int, 120 (default)
         Sitenin veya internetinizin durumuna göre paket zaman aşımına uğrayabilir. Yoğunluk durumunda arttırmanız tavsiye edilir.
     browser: "chrome" or "firefox"
         Kullandığınız web tarayıcı
-````
+```
 #### Example
 ```
 rapor = bddk.get_rapor(
