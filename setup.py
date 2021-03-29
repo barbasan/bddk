@@ -5,7 +5,7 @@ with open("/home/barbasan/Documents/bddkalpha/README.md","r") as mdfile:
 
 setup(
     name="bddk",
-    version="1.0",
+    version="1.1",
     description="Bddk Veri",
     py_modules=["bddk"],
     package_dir={"": "src"},
